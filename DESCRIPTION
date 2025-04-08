@@ -1,0 +1,24 @@
+Package: textphonemizer
+Title: Convert Text Strings to Phonetic Spellings
+Version: 0.0.0.9000
+Authors@R: 
+    person("Sarah", "Heffley", , "sheffley@uchicago.edu", role = c("aut", "cre"))
+Description: Tools for converting natural langauge text into phonetic spellings using the International Phonetic Alphabet (IPA). 
+  Includes functions for scraping phonetic spellings from Wiktionary, aligning and comparing phonetic sequences, and evaluating 
+  automatically generated transcription errors using manually transcribed text. Developed for use by the TMW Center at the 
+  University of Chicago.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Imports: 
+    dplyr,
+    glue,
+    progress,
+    purrr,
+    readr,
+    rvest,
+    stringdist,
+    stringr,
+    tibble,
+    xml2

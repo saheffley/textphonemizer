@@ -1,0 +1,3 @@
+install.packages(c("usethis", "devtools"))
+usethis::create_package("~/Users/sarahheffley/Library/Mobile Documents/com~apple~CloudDocs/Documents/textphonemizer")
+usethis::create_package("~/Documents/textphonemizer")

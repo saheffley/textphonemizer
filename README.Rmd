@@ -1,0 +1,54 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# textphonemizer
+
+<!-- badges: start -->
+![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
+![R version](https://img.shields.io/badge/R-4.0%2B-success)
+<!-- badges: end -->
+
+Use textphonemizer to convert natural language text into phonetic spellings using the International Phonetic Alphabet (IPA).  
+This package includes tools for:
+- Scraping phonetic spellings from Wiktionary
+- Converting sentences & text strings to IPA
+- Comparing phoneme-level differences (e.g., substitutions, insertions, deletions)
+- Building and expanding a custom phonetic dictionary
+
+## Installation
+
+You can install the development version of textphonemizer like so:
+
+``` r
+# install from GitHub
+# remotes::install_github("saheffley/textphonemizer")
+```
+
+## Example
+
+```{r example}
+library(textphonemizer)
+
+# create dictionary
+generate_dictionary_from_csv("sample_data.csv", text_columns = c("auto_transcript", "manual_transcript"))
+
+# compare two IPA strings
+compare_phonetic_sequences("he went over the bridge", "he went over the ridge")
+
+# view alignment details
+compare_phonetic_alignment("the cat sat on the mat", "the cat sat in the mat")
+
+```
+
