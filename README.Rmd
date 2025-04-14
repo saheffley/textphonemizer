@@ -39,20 +39,18 @@ You can install the development version of textphonemizer like so:
 ## Example
 
 ```{r example}
-library(textphonemizer)
-
 # create dictionary
-generate_dictionary_from_csv("sample_data.csv", text_columns = c("auto_transcript", "manual_transcript"))
+textphonemizer::generate_dictionary_from_csv("sample_data.csv", text_columns = c("auto_transcript", "manual_transcript"))
 
 # manually add words
-add_to_dictionary("word")
-add_to_dictionary(c("you", "can", "also", "add", "multiple", "words", "at", "once"))
+textphonemizer::add_to_dictionary("word")
+textphonemizer::add_to_dictionary(c("you", "can", "also", "add", "multiple", "words", "at", "once"))
 
 # compare two IPA strings
-compare_phonetic_sequences("he went over the bridge", "he went over the ridge")
+textphonemizer::compare_phonetic_sequences("he went over the bridge", "he went over the ridge")
 
 # view alignment details
-compare_phonetic_alignment("the cat sat on the mat", "the cat sat in the mat")
+textphonemizer::compare_phonetic_alignment("the cat sat on the mat", "the cat sat in the mat")
 
 ```
 Whenever you add words to the dictionary, R will print a tibble with only the new words.
