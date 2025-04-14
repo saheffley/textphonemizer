@@ -22,10 +22,11 @@ knitr::opts_chunk$set(
 
 Use textphonemizer to convert natural language text into phonetic spellings using the International Phonetic Alphabet (IPA).  
 This package includes tools for:
-- Scraping phonetic spellings from Wiktionary
-- Converting sentences & text strings to IPA
-- Comparing phoneme-level differences (e.g., substitutions, insertions, deletions)
-- Building and expanding a custom phonetic dictionary
+
+* Scraping phonetic spellings from Wiktionary
+* Converting sentences & text strings to IPA
+* Comparing phoneme-level differences (e.g., substitutions, insertions, deletions)
+* Building and expanding a custom phonetic dictionary
 
 ## Installation
 
@@ -37,6 +38,13 @@ You can install the development version of textphonemizer like so:
 ```
 
 ## Example
+
+```{r reset-dictionary, include = FALSE}
+# Wipe the dictionary silently
+if (file.exists("phonetic_dictionary.csv")) {
+  file.remove("phonetic_dictionary.csv")
+}
+```
 
 ```{r example}
 # create dictionary
