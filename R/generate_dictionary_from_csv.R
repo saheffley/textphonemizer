@@ -50,5 +50,5 @@ generate_dictionary_from_csv <- function(csv_path, text_columns, out_path = "pho
     distinct(word, .keep_all = TRUE)
   
   write_csv(updated_dict, out_path)
-  return(updated_dict)
+  return(new_dict)
 }

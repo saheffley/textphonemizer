@@ -36,8 +36,11 @@ text_to_ipa <- function(sentence, dict_path = "phonetic_dictionary.csv") {
   
   if (any(is.na(ipa_seq))) {
     missing_words <- words[is.na(ipa_seq)]
-    warning("Oh no! We couldn't find the following word(s) in the dictionary: ",
-            paste(unique(missing_words), collapse = ", "))
+    warning(
+      "Oh no! We couldn't find the following word(s) in the dictionary: ",
+      paste(unique(missing_words), collapse = ", "),
+      ". Use `add_manual_ipa()` to manually add them."
+    )
   }
   
   return(tibble(word = words, ipa = ipa_seq))
