@@ -41,6 +41,15 @@ add_to_dictionary <- function(words, dict_path = "phonetic_dictionary.csv") {
     pb$tick()
     tibble(word = w, ipa = ipa)
   })
+    
+    if (any(is.na(new_entries$ipa))) {
+      missing <- new_entries$word[is.na(new_entries$ipa)]
+      warning(
+        "Oh no! We couldn't find the following word(s) in the dictionary: ",
+        paste(unique(missing), collapse = ", "),
+        ". Use `add_manual_ipa()` to manually add them."
+      )
+  }
   
   updated_dict <- bind_rows(dict, new_entries) %>%
     distinct(word, .keep_all = TRUE)

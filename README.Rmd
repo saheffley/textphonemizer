@@ -48,17 +48,24 @@ if (file.exists("phonetic_dictionary.csv")) {
 
 ```{r example}
 # create dictionary
-textphonemizer::generate_dictionary_from_csv("sample_data.csv", text_columns = c("auto_transcript", "manual_transcript"))
 
-# manually add words
+textphonemizer::generate_dictionary_from_csv("sample_data.csv", text_columns = c("auto_transcript", "manual_transcript"))
+# add words
+
 textphonemizer::add_to_dictionary("word")
 textphonemizer::add_to_dictionary(c("you", "can", "also", "add", "multiple", "words", "at", "once"))
+# manually add custom words (for names, invented words, etc)
 
+textphonemizer::add_manual_ipa("Heffley", "ˈhɛf.li")
 # compare two IPA strings
-textphonemizer::compare_phonetic_sequences("he went over the bridge", "he went over the ridge")
 
+textphonemizer::compare_phonetic_sequences("he went over the bridge", "he went over the ridge")
 # view alignment details
+
 textphonemizer::compare_phonetic_alignment("the cat sat on the mat", "the cat sat in the mat")
+# Some sample errors
+
+textphonemizer::compare_phonetic_alignment("he went on the bridge", "she went on the bridge")
+textphonemizer::add_to_dictionary("supercalifragilisticality")
 
 ```
-Whenever you add words to the dictionary, R will print a tibble with only the new words.

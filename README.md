@@ -32,6 +32,7 @@ You can install the development version of textphonemizer like so:
 
 ``` r
 # create dictionary
+
 textphonemizer::generate_dictionary_from_csv("sample_data.csv", text_columns = c("auto_transcript", "manual_transcript"))
 #> please be patient, I'm scraping 11 new words and I'm just a function
 #> # A tibble: 11 × 2
@@ -51,8 +52,8 @@ textphonemizer::generate_dictionary_from_csv("sample_data.csv", text_columns = c
 ```
 
 ``` r
+# add words
 
-# manually add words
 textphonemizer::add_to_dictionary("word")
 #> Adding 1 new word(s) to your dictionary...
 #> # A tibble: 1 × 2
@@ -78,8 +79,19 @@ textphonemizer::add_to_dictionary(c("you", "can", "also", "add", "multiple", "wo
 ```
 
 ``` r
+# manually add custom words (for names, invented words, etc)
 
+textphonemizer::add_manual_ipa("Heffley", "ˈhɛf.li")
+#> Added 'heffley' to the dictionary.
+#> # A tibble: 1 × 2
+#>   word    ipa    
+#>   <chr>   <chr>  
+#> 1 heffley ˈhɛf.li
+```
+
+``` r
 # compare two IPA strings
+
 textphonemizer::compare_phonetic_sequences("he went over the bridge", "he went over the ridge")
 #> $total_edit_distance
 #> [1] 1
@@ -92,8 +104,8 @@ textphonemizer::compare_phonetic_sequences("he went over the bridge", "he went o
 ```
 
 ``` r
-
 # view alignment details
+
 textphonemizer::compare_phonetic_alignment("the cat sat on the mat", "the cat sat in the mat")
 #> $total_errors
 #> [1] 1
@@ -117,5 +129,39 @@ textphonemizer::compare_phonetic_alignment("the cat sat on the mat", "the cat sa
 #> [1] "ðiːkætsætɪnðiːmæt"
 ```
 
-Whenever you add words to the dictionary, R will print a tibble with
-only the new words.
+``` r
+# Some sample errors
+
+textphonemizer::compare_phonetic_alignment("he went on the bridge", "she went on the bridge")
+#> Warning in text_to_ipa(text2, dict_path): Oh no! We couldn't find the following
+#> word(s) in the dictionary: she. Use `add_manual_ipa()` to manually add them.
+#> $total_errors
+#> [1] 3
+#> 
+#> $substitutions
+#> [1] 2
+#> 
+#> $deletions
+#> [1] 1
+#> 
+#> $insertions
+#> [1] 0
+#> 
+#> $percent_misaligned
+#> [1] 16.7
+#> 
+#> $aligned_seq1
+#> [1] "hiːwɛntɒnðiːbɹɪd͡ʒ"
+#> 
+#> $aligned_seq2
+#> [1] "-NAwɛntɒnðiːbɹɪd͡ʒ"
+```
+
+``` r
+textphonemizer::add_to_dictionary("supercalifragilisticality")
+#> Adding 1 new word(s) to your dictionary...
+#> # A tibble: 1 × 2
+#>   word                      ipa  
+#>   <chr>                     <lgl>
+#> 1 supercalifragilisticality NA
+```
