@@ -62,14 +62,19 @@ textphonemizer::add_to_dictionary(c("you", "can", "also", "add", "multiple", "wo
 textphonemizer::add_manual_ipa("Heffley", "ˈhɛf.li")
 ```
 
+```{r, include=FALSE}
+textphonemizer::add_to_dictionary("she")
+```
+
 ### Analyzing Strings
 ```{r more examples}
-# compare two IPA strings (limited use cases since does not account for punctuation differences)
+# compare two IPA strings
 
 textphonemizer::compare_phonetic_sequences("he went over the bridge", "he went over the ridge")
-# do phoneme-level comparisons by breaking strings into English's 44 phonemes
+# do more detailed phoneme-level comparisons with error type counts:
 
 textphonemizer::compare_phonetic_alignment("the cat sat on the mat", "the cat sat in the mat")
+textphonemizer::compare_phonetic_alignment("she went over the bridge", "he went over the ridge")
 ```
 
 ### Sample Errors
@@ -77,6 +82,6 @@ textphonemizer::compare_phonetic_alignment("the cat sat on the mat", "the cat sa
 # Some sample errors
 
 textphonemizer::compare_phonetic_alignment("he went on the bridge", "she went on the bridge")
-textphonemizer::add_to_dictionary(c("bleepbloop", "airplane"))
+textphonemizer::add_to_dictionary("bleepbloop", "airplane")
 
 ```
