@@ -81,7 +81,7 @@ textphonemizer::compare_phonetic_alignment("she went over the bridge", "he went 
 ```{r even more examples, warning=TRUE, message=TRUE}
 # Some sample errors
 
-textphonemizer::compare_phonetic_alignment("he went on the bridge", "she went on the bridge")
+textphonemizer::compare_phonetic_alignment("he went on the bridge", "she went on the barge")
 textphonemizer::add_to_dictionary("bleepbloop", "airplane")
 
 ```
