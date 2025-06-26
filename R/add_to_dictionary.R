@@ -10,7 +10,7 @@
 #' @importFrom readr read_csv write_csv
 #' @importFrom stringr str_replace_all str_split
 #' @importFrom glue glue
-#' @importFrom dplyr distinct bind_rows
+#' @importFrom dplyr distinct bind_rows filter arrange
 #' @importFrom tibble tibble
 #' @importFrom progress progress_bar
 #' @importFrom purrr map_df
@@ -30,8 +30,9 @@ add_to_dictionary <- function(words, dict_path = "phonetic_dictionary.csv") {
   
   if (length(new_words) == 0) {
     message("No new words here! Everything is already in the dictionary.")
-    return(dict)
+    return(head(dict))
   }
+  
   
   message("Adding ", length(new_words), " new word(s) to your dictionary...")
   pb <- progress_bar$new(total = length(new_words), format = " [:bar] :percent")
@@ -39,20 +40,20 @@ add_to_dictionary <- function(words, dict_path = "phonetic_dictionary.csv") {
   new_entries <- map_df(new_words, function(w) {
     ipa <- get_phonetic_spelling_wiktionary(w)
     pb$tick()
-    tibble(word = w, ipa = ipa)
+    tibble(word = as.character(w), ipa = if (is.na(ipa)) NA_character_ else as.character(ipa))
   })
-    
-    if (any(is.na(new_entries$ipa))) {
-      missing <- new_entries$word[is.na(new_entries$ipa)]
-      warning(
-        "Oh no! We couldn't find the following word(s) in the dictionary: ",
-        paste(unique(missing), collapse = ", "),
-        ". Use `add_manual_ipa()` to manually add them."
-      )
+  
+  missing <- new_entries$word[is.na(new_entries$ipa)]
+  valid_entries <- filter(new_entries, !is.na(ipa))
+  
+  if (length(missing) > 0) {
+    warning("The following word(s) could not be found on Wiktionary: ", paste(missing, collapse = ", "), ". Use `add_manual_ipa()` to add them.")
+    print("Continuing without these words.")
   }
   
-  updated_dict <- bind_rows(dict, new_entries) %>%
-    distinct(word, .keep_all = TRUE)
+  updated_dict <- bind_rows(dict, valid_entries) %>%
+    distinct(word, .keep_all = TRUE) %>%
+    arrange(word)
   
   write_csv(updated_dict, dict_path)
   return(new_entries)

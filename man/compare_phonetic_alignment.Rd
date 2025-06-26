@@ -26,5 +26,5 @@ a list with:
 }
 }
 \description{
-Function to generate IPA versions of two text strings for comparison with tally of errors, error types (substitution, deletion, insertion), and misalignment percentage.
+Function to break two text strings into strings of phonemes for comparison with tally of errors, error types (substitution, deletion, insertion), and misalignment percentage.
 }

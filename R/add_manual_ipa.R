@@ -11,9 +11,10 @@
 #' 
 #' @importFrom tibble tibble
 #' @importFrom readr read_csv write_csv
+#' @importFrom dplyr arrange
 #' 
 
-add_manual_ipa <- function(word, ipa, dict_path = "phonetic_dictionary.csv") {
+add_manual_ipa <- function(word, ipa, dict_path = "phonetic_dictionary.csv", overwrite = TRUE) {
   word <- tolower(word)
   
   if (file.exists(dict_path)) {
@@ -23,11 +24,24 @@ add_manual_ipa <- function(word, ipa, dict_path = "phonetic_dictionary.csv") {
   }
   
   if (word %in% dict$word) {
-    message("The word '", word, "' already exists in the dictionary. No changes made.")
-    return(dict)
+    if (overwrite) {
+      dict <- dplyr::filter(dict, word != !!word) #removing old entry
+      message("The word '", word, "' already existed and is being overwritten.")
+    } else {
+      message("The word '", word, "' already exists in the dictionary and no changes have been made.")
+      return(head(dict))
+    }
   }
   
   new_entry <- tibble(word = word, ipa = ipa)
+  
+  updated_dict <- bind_rows(dict, new_entry) %>%
+    distinct(word, .keep_all = TRUE) %>%
+    arrange(word)
+  
   message("Added '", word, "' to the dictionary.")
+  
+  write_csv(updated_dict, dict_path)
+  
   return(new_entry)
 }

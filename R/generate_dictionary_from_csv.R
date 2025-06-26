@@ -12,7 +12,7 @@
 #' @importFrom readr read_csv write_csv
 #' @importFrom stringr str_replace_all str_split
 #' @importFrom glue glue
-#' @importFrom dplyr distinct bind_rows
+#' @importFrom dplyr distinct bind_rows filter arrange mutate
 
 generate_dictionary_from_csv <- function(csv_path, text_columns, out_path = "phonetic_dictionary.csv"){
   df <- read_csv(csv_path, show_col_types = FALSE)
@@ -42,9 +42,16 @@ generate_dictionary_from_csv <- function(csv_path, text_columns, out_path = "pho
   if (length(new_words) == 0) {
     message("No new words to scrape--dictionary is already up to date!")
     return(existing_dict)
+    
   }
   
   new_dict <- scrape_bulk_phonetic_spelling(new_words)
+  
+  print("Column types in new_dict:")
+  str(new_dict)
+  
+  print("Column types in existing_dict:")
+  str(existing_dict)
   
   updated_dict <- bind_rows(existing_dict, new_dict) %>%
     distinct(word, .keep_all = TRUE)

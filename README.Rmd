@@ -11,6 +11,8 @@ knitr::opts_chunk$set(
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
+
+library(textphonemizer)
 ```
 
 # textphonemizer
@@ -46,6 +48,7 @@ if (file.exists("phonetic_dictionary.csv")) {
 }
 ```
 
+### Adding Words to Local Dictionary
 ```{r example}
 # create dictionary
 
@@ -57,15 +60,23 @@ textphonemizer::add_to_dictionary(c("you", "can", "also", "add", "multiple", "wo
 # manually add custom words (for names, invented words, etc)
 
 textphonemizer::add_manual_ipa("Heffley", "ˈhɛf.li")
-# compare two IPA strings
+```
+
+### Analyzing Strings
+```{r more examples}
+# compare two IPA strings (limited use cases since does not account for punctuation differences)
 
 textphonemizer::compare_phonetic_sequences("he went over the bridge", "he went over the ridge")
-# view alignment details
+# do phoneme-level comparisons by breaking strings into English's 44 phonemes
 
 textphonemizer::compare_phonetic_alignment("the cat sat on the mat", "the cat sat in the mat")
+```
+
+### Sample Errors
+```{r even more examples, warning=TRUE, message=TRUE}
 # Some sample errors
 
 textphonemizer::compare_phonetic_alignment("he went on the bridge", "she went on the bridge")
-textphonemizer::add_to_dictionary("supercalifragilisticality")
+textphonemizer::add_to_dictionary(c("bleepbloop", "airplane"))
 
 ```

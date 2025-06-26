@@ -4,7 +4,12 @@
 \alias{add_manual_ipa}
 \title{Manually Add a Word to the Phonetic Dictionary}
 \usage{
-add_manual_ipa(word, ipa, dict_path = "phonetic_dictionary.csv")
+add_manual_ipa(
+  word,
+  ipa,
+  dict_path = "phonetic_dictionary.csv",
+  overwrite = TRUE
+)
 }
 \arguments{
 \item{word}{a single word}

@@ -11,7 +11,7 @@
 #' @importFrom readr read_csv
 #' @importFrom stringr str_replace_all str_split str_remove_all
 #' @importFrom purrr map_chr
-#' @importFrom dplyr filter pull
+#' @importFrom dplyr filter pull arrange
 #' @importFrom tibble tibble
 
 #sentences to phonetic spelling
@@ -19,7 +19,8 @@
 clean_ipa <- function(ipa) {
   ipa %>%
     str_remove_all("^/|/$") %>%
-    str_remove_all("[ˈˌ\\.]")
+    str_remove_all("[ˈˌ\\.]") %>%
+    str_remove_all("[()]")
 }
 
 text_to_ipa <- function(sentence, dict_path = "phonetic_dictionary.csv") {
@@ -37,9 +38,9 @@ text_to_ipa <- function(sentence, dict_path = "phonetic_dictionary.csv") {
   if (any(is.na(ipa_seq))) {
     missing_words <- words[is.na(ipa_seq)]
     warning(
-      "Oh no! We couldn't find the following word(s) in the dictionary: ",
+      "Oh no! We couldn't find the following word(s) in the local dictionary: ",
       paste(unique(missing_words), collapse = ", "),
-      ". Use `add_manual_ipa()` to manually add them."
+      ". Use `add_to_dictionary()` to add them."
     )
   }
   

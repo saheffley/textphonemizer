@@ -30,6 +30,8 @@ You can install the development version of textphonemizer like so:
 
 ## Example
 
+### Adding Words to Local Dictionary
+
 ``` r
 # create dictionary
 
@@ -66,15 +68,15 @@ textphonemizer::add_to_dictionary("word")
 textphonemizer::add_to_dictionary(c("you", "can", "also", "add", "multiple", "words", "at", "once"))
 #> Adding 8 new word(s) to your dictionary...
 #> # A tibble: 8 × 2
-#>   word     ipa       
-#>   <chr>    <chr>     
-#> 1 you      /juː/     
-#> 2 can      /ˈkæn/    
-#> 3 also     /ˈɔːl.səʊ/
-#> 4 add      /æd/      
-#> 5 multiple /ˈmʌltɪpl̩/
-#> 6 words    /wɜːdz/   
-#> 7 at       /æt/      
+#>   word     ipa        
+#>   <chr>    <chr>      
+#> 1 you      /juː/      
+#> 2 can      /ˈkæn/     
+#> 3 also     /ˈɔːl.səʊ/ 
+#> 4 add      /æd/       
+#> 5 multiple /ˈmʌltɪpəl/
+#> 6 words    /wɜːdz/    
+#> 7 at       /æt/       
 #> 8 once     /wʌn(t)s/
 ```
 
@@ -89,8 +91,10 @@ textphonemizer::add_manual_ipa("Heffley", "ˈhɛf.li")
 #> 1 heffley ˈhɛf.li
 ```
 
+### Analyzing Strings
+
 ``` r
-# compare two IPA strings
+# compare two IPA strings (limited use cases since does not account for punctuation differences)
 
 textphonemizer::compare_phonetic_sequences("he went over the bridge", "he went over the ridge")
 #> $total_edit_distance
@@ -104,7 +108,7 @@ textphonemizer::compare_phonetic_sequences("he went over the bridge", "he went o
 ```
 
 ``` r
-# view alignment details
+# do phoneme-level comparisons by breaking strings into English's 44 phonemes
 
 textphonemizer::compare_phonetic_alignment("the cat sat on the mat", "the cat sat in the mat")
 #> $total_errors
@@ -128,6 +132,8 @@ textphonemizer::compare_phonetic_alignment("the cat sat on the mat", "the cat sa
 #> $aligned_seq2
 #> [1] "ðiːkætsætɪnðiːmæt"
 ```
+
+### Sample Errors
 
 ``` r
 # Some sample errors
@@ -158,10 +164,11 @@ textphonemizer::compare_phonetic_alignment("he went on the bridge", "she went on
 ```
 
 ``` r
-textphonemizer::add_to_dictionary("supercalifragilisticality")
-#> Adding 1 new word(s) to your dictionary...
-#> # A tibble: 1 × 2
-#>   word                      ipa  
-#>   <chr>                     <lgl>
-#> 1 supercalifragilisticality NA
+textphonemizer::add_to_dictionary(c("bleepbloop", "airplane"))
+#> Adding 2 new word(s) to your dictionary...
+#> # A tibble: 2 × 2
+#>   word       ipa        
+#>   <chr>      <chr>      
+#> 1 bleepbloop <NA>       
+#> 2 airplane   /ˈeɹˌpleɪ̯n/
 ```

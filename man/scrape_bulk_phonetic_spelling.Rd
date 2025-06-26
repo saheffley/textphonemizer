@@ -15,5 +15,5 @@ scrape_bulk_phonetic_spelling(word_list, out_path = "phonetic_dictionary.csv")
 a .csv with words and their phonetic spellings
 }
 \description{
-Scrapes Wiktionary for the International Phonetic Alphabet (IPA) spelling of words
+Scrapes Wiktionary for the International Phonetic Alphabet (IPA) spelling of words. Defaults to US pronunciation.
 }
