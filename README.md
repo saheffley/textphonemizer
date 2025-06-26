@@ -16,7 +16,7 @@ This package includes tools for:
 - Scraping phonetic spellings from Wiktionary
 - Converting sentences & text strings to IPA
 - Comparing phoneme-level differences (e.g., substitutions, insertions,
-  deletions)
+  deletions) based on the Levenshtein distance
 - Building and expanding a custom phonetic dictionary
 
 ## Installation
