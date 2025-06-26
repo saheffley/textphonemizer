@@ -70,7 +70,7 @@ textphonemizer::add_to_dictionary(c("you", "can", "also", "add", "multiple", "wo
 #> # A tibble: 8 × 2
 #>   word     ipa        
 #>   <chr>    <chr>      
-#> 1 you      /juː/      
+#> 1 you      /jy/       
 #> 2 can      /ˈkæn/     
 #> 3 also     /ˈɔːl.səʊ/ 
 #> 4 add      /æd/       
@@ -94,7 +94,7 @@ textphonemizer::add_manual_ipa("Heffley", "ˈhɛf.li")
 ### Analyzing Strings
 
 ``` r
-# compare two IPA strings (limited use cases since does not account for punctuation differences)
+# compare two IPA strings
 
 textphonemizer::compare_phonetic_sequences("he went over the bridge", "he went over the ridge")
 #> $total_edit_distance
@@ -108,7 +108,7 @@ textphonemizer::compare_phonetic_sequences("he went over the bridge", "he went o
 ```
 
 ``` r
-# do phoneme-level comparisons by breaking strings into English's 44 phonemes
+# do more detailed phoneme-level comparisons with error type counts:
 
 textphonemizer::compare_phonetic_alignment("the cat sat on the mat", "the cat sat in the mat")
 #> $total_errors
@@ -133,42 +133,65 @@ textphonemizer::compare_phonetic_alignment("the cat sat on the mat", "the cat sa
 #> [1] "ðiːkætsætɪnðiːmæt"
 ```
 
-### Sample Errors
-
 ``` r
-# Some sample errors
-
-textphonemizer::compare_phonetic_alignment("he went on the bridge", "she went on the bridge")
-#> Warning in text_to_ipa(text2, dict_path): Oh no! We couldn't find the following
-#> word(s) in the dictionary: she. Use `add_manual_ipa()` to manually add them.
+textphonemizer::compare_phonetic_alignment("she went over the bridge", "he went over the ridge")
 #> $total_errors
 #> [1] 3
 #> 
 #> $substitutions
-#> [1] 2
+#> [1] 1
 #> 
 #> $deletions
-#> [1] 1
+#> [1] 2
 #> 
 #> $insertions
 #> [1] 0
 #> 
 #> $percent_misaligned
-#> [1] 16.7
+#> [1] 12.5
 #> 
 #> $aligned_seq1
-#> [1] "hiːwɛntɒnðiːbɹɪd͡ʒ"
+#> [1] "hjoːwɛntəʊvə(ɹ)ðiːbɹɪd͡ʒ"
 #> 
 #> $aligned_seq2
-#> [1] "-NAwɛntɒnðiːbɹɪd͡ʒ"
+#> [1] "h-iːwɛntəʊvə(ɹ)ðiː-ɹɪd͡ʒ"
+```
+
+### Sample Errors
+
+``` r
+# Some sample errors
+
+textphonemizer::compare_phonetic_alignment("he went on the bridge", "she went on the barge")
+#> Warning in text_to_ipa(text2, dict_path): Oh no! We couldn't find the following
+#> word(s) in the dictionary: barge. Use `add_manual_ipa()` to manually add them.
+#> $total_errors
+#> [1] 8
+#> 
+#> $substitutions
+#> [1] 3
+#> 
+#> $deletions
+#> [1] 4
+#> 
+#> $insertions
+#> [1] 1
+#> 
+#> $percent_misaligned
+#> [1] 42.1
+#> 
+#> $aligned_seq1
+#> [1] "h-iːwɛntɒnðiːbɹɪd͡ʒ"
+#> 
+#> $aligned_seq2
+#> [1] "hjoːwɛntɒnðiː----NA"
 ```
 
 ``` r
-textphonemizer::add_to_dictionary(c("bleepbloop", "airplane"))
-#> Adding 2 new word(s) to your dictionary...
-#> # A tibble: 2 × 2
-#>   word       ipa        
-#>   <chr>      <chr>      
-#> 1 bleepbloop <NA>       
-#> 2 airplane   /ˈeɹˌpleɪ̯n/
+textphonemizer::add_to_dictionary("bleepbloop", "airplane")
+#> No new words here! Everything is already in the dictionary.
+#> # A tibble: 1 × 2
+#>   word       ipa  
+#>   <chr>      <lgl>
+#> 1 bleepbloop NA
 ```
